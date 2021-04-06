@@ -6,6 +6,10 @@ build/
 !**/src/test/**/build/
 
 src/main/resources/application.yaml
+src/main/resources/static/css
+src/main/resources/static/fonts
+src/main/resources/static/plugin
+src/main/resources/static/scripts
 
 ### IntelliJ IDEA ###
 .idea
