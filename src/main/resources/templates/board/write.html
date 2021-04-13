@@ -1,16 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>게시판 글쓰기 페이지</title>
+    <link rel='stylesheet' href='/webjars/bootstrap/4.5.0/css/bootstrap.min.css'>
 </head>
 <body>
-<form  action="/post" method="post">
-    제목 : <input type="text" name="title"> <br>
-    작성자 : <input type="text" name="writer"> <br>
-    <textarea name="content"></textarea><br>
+<header th:insert="common/header.html"></header>
+<div class="card-body">
+    <form action="/post" method="post">
+        <!-- 제목 -->
+        <div class="form-group row">
+            <label for="title" class="col-sm-2" col-form-label><strong>제목</strong></label>
+            <div class="col-sm-10">
+                <input type="text" name="title" id="title" class="form-control">
+            </div>
+        </div>
 
-    <input type="submit" value="등록">
-</form>
+        <!-- 작성자 -->
+        <div class="form-group row">
+            <label for="writer" class="col-sm-2" col-form-label><strong>작성자</strong></label>
+            <div class="col-sm-10">
+                <input type="text" name="writer" id="writer" class="form-control">
+            </div>
+        </div>
+
+        <!-- 내용 -->
+        <div class="form-group row">
+            <label for="content" class="col-sm-2 col-form-label"><strong>내용</strong></label>
+            <div class="col-sm-10">
+                <textarea name="content" id="content" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
+            </div>
+        </div>
+
+        <!--    <input type="submit" value="등록">-->
+        <div class="row">
+            <div class="col-auto mr-auto"></div>
+            <div class="col-auto">
+                <input class="btn btn-primary" type="submit" role="button" value="저장하기">
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>

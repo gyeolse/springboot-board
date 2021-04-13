@@ -1,47 +1,64 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-
-    <link rel="stylesheet" th:href="@{/css/board.css}">
+    <title>게시판 목록 페이지</title>
+    <link rel="stylesheet" href='/webjars/bootstrap/4.5.0/css/bootstrap.min.css'>
 </head>
 <body>
     <!-- HEADER -->
     <div th:insert="common/header.html" id="header"></div>
 
-    <a th:href="@{/post}">글쓰기</a>
 
-    <table>
-        <thead>
-        <tr>
-            <th class="one wide">번호</th>
-            <th class="two wide">글제목</th>
-            <th class="three wide">작성자</th>
-            <th class="four wide">작성일</th>
-        </tr>
-        </thead>
+    <div class="container">
+        <table class="table">
+            <thead class="thead-light">
+            <tr class="text-center">
+                <th scope="col">번호</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성자</th>
+                <th scope="col">작성일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-center" th:each="board : ${boardList}">
+                <td>
+                    <span th:text="${board.id}"></span>
+                </td>
+                <td>
+                    <a th:href="@{'/post/' + ${board.id}}">
+                        <span th:text="${board.title}"></span>
+                    </a>
+                </td>
+                <td>
+                    <span th:text="${board.writer}"></span>
+                </td>
+                <td>
+                    <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-auto mr-auto"></div>
+            <div class="col-auto">
+                <a class="btn btn-primary" th:href="@{/post}" role="button">글쓰기</a>
+            </div>
+        </div>
+    </div>
 
-        <tbody>
-        <tr th:each="board : ${boardList}">
-            <td>
-                <span th:text="${board.id}"></span>
-            </td>
-            <td>
-                <a th:href="@{'/post/' + ${board.id}}">
-                    <span th:text="${board.title}"></span>
-                </a>
-            </td>
-            <td>
-                <span th:text="${board.writer}"></span>
-            </td>
-            <td>
-                <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <script src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
     <!--FOOTER-->
+    <!-- 검색 form -->
+    <form action="/board/search" method="GET">
+        <div>
+            <input name="keyword" type="text" placeholder="검색어를 입력해주세요">
+        </div>
+
+        <button>검색하기</button>
+    </form>
     <div th:insert="common/footer.html" id="footer"></div>
 </body>
 </html>

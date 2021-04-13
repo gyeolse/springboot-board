@@ -72,4 +72,31 @@ public class BoardService {
     public void deletePost(Long id) {
         boardRepository.deleteById(id);
     }
+
+    //게시글을 검색하는 서비스
+    @Transactional
+    public List<BoardDto> searchPosts(String keyword) {
+        List<BoardEntity> boardEntities = boardRepository.findByTitleContaining(keyword);
+
+        List<BoardDto> boardDtoList = new ArrayList<>();
+
+        if(boardEntities.isEmpty()) return boardDtoList; //아무것도 존재하지 않을 경우
+
+        for (BoardEntity boardEntity : boardEntities) {
+            boardDtoList.add(this.convertEntityToDto(boardEntity));
+        }
+
+        return boardDtoList;
+    }
+
+    //ConvertEntityToDto : Entity를 Dto로 변환하는 함수
+    private BoardDto convertEntityToDto(BoardEntity boardEntity) {
+        return BoardDto.builder()
+                .id(boardEntity.getId())
+                .title(boardEntity.getTitle())
+                .content(boardEntity.getContent())
+                .writer(boardEntity.getWriter())
+                .createdDate(boardEntity.getCreatedDate())
+                .build();
+    }
 }

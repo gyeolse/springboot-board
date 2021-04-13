@@ -54,6 +54,17 @@ public class BoardController {
         return "board/update.html";
     }
 
+    //게시글 검색을 위한 컨트롤러
+    @GetMapping("/board/search")
+    public String search(@RequestParam(value="keyword") String keyword, Model model) {
+        List<BoardDto> boardDtoList = boardService.searchPosts(keyword);
+
+        model.addAttribute("boardList", boardDtoList);
+
+        return "board/list.html";
+
+    }
+
     // 문제 해결 : https://victorydntmd.tistory.com/327?category=764331
     //게시글 수정을 위한 컨트롤러
     @PutMapping("/post/edit/{no}")
@@ -71,6 +82,4 @@ public class BoardController {
 
         return "redirect:/";
     }
-
-
 }
