@@ -15,10 +15,12 @@ public class BoardController {
     private BoardService boardService;
 
     @GetMapping("/")
-    public String list(Model model) { //Model 객체를 통해서 View에 데이터를 전달한다.
-        List<BoardDto> boardList = boardService.getBoardList();
+    public String list(Model model, @RequestParam(value="page", defaultValue = "1") Integer pageNum) { //Model 객체를 통해서 View에 데이터를 전달한다.
+        List<BoardDto> boardList = boardService.getBoardList(pageNum);
+        Integer[] pageList = boardService.getPageList(pageNum);
 
         model.addAttribute("boardList", boardList);
+        model.addAttribute("pageList", pageList);
 
         return "board/list.html";
     }
